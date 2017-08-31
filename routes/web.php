@@ -14,3 +14,15 @@
 $app->get('/', function () use ($app) {
     return $app->version();
 });
+
+$app->post('/login', function () {
+    return 'login api';
+});
+
+$app->post('/verify', function () {
+    return 'verify api';
+});
+
+$app->post('/register', function () {
+    return 'register api';
+});
