@@ -12,17 +12,20 @@
 */
 
 $app->get('/', function () use ($app) {
-    return $app->version();
+  $res['success'] = true;
+  $res['result'] = 'Hello world';
+  return response($res);
 });
 
-$app->post('/login', function () {
-    return 'login api';
-});
+// route for creating access_token
+$app->post('accessToken', 'AccessTokenController@createAccessToken');
 
-$app->post('/verify', function () {
-    return 'verify api';
-});
+$app->get('/user/{id}', 'UserController@get_user');
 
-$app->post('/register', function () {
-    return 'register api';
+$app->group(['middleware' => 'auth:api'], function () use ($app) {
+    $app->post('users', 'UserController@store');
+    $app->get('users', 'UserController@index');
+    $app->get('users/{id}', 'UserController@get_user');
+    $app->put('users/{id}', 'UserController@update');
+    $app->delete('users/{id}', 'UserController@destroy');
 });
